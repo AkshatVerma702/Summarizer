@@ -36,7 +36,7 @@ def main():
 
     cleaned_summary = clean_summary(" ".join(str(sentence) for sentence in summary))
 
-    target_language = 'en'  # Change this to the user-selected language
+    target_language = sys.argv[2]  # Change this to the user-selected language
 
     # Ensure that the user-selected language is valid
     valid_languages = ['en', 'hi', 'es', 'de']  # Add more languages as needed

@@ -9,8 +9,9 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server Started on Port ${PORT}`));
 
 app.get('/api/wikimedia', async (req, res) => {
-  const { articleTitle } = req.query;
-  console.log(articleTitle);
+  const { articleTitle, lang} = req.query;
+  console.log("Language Selected: ");
+  console.log(lang);
   try {
     const wikiURI = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&titles=${articleTitle}&explaintext=1&exsectionformat=plain`;
     const response = await axios.get(wikiURI);
@@ -20,7 +21,7 @@ app.get('/api/wikimedia', async (req, res) => {
     // Write plainText to a file
     fs.writeFileSync('input.txt', plainText);
     // Run the summarizer.py script with input.txt as an argument
-    const pythonProcess = spawn('python', ['summarizer.py', 'input.txt']);
+    const pythonProcess = spawn('python', ['summarizer.py', 'input.txt',lang]);
     pythonProcess.stdout.on('data', (data) => {
       console.log(data.toString());
     });
