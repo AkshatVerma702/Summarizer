@@ -1,3 +1,4 @@
+import path from 'path'
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -6,6 +7,12 @@ const fs = require('fs');
 const app = express();
 
 const PORT = process.env.PORT || 5000;
+app.use(express.static(path.join("__dirname", "./client/build")))
+app.get('*',function(_,res){
+  res.sendFile(path.join(__dirname, "./client/build/index.html"), function(err){
+    res.status(500).send(err)
+  })
+})
 app.listen(PORT, () => console.log(`Server Started on Port ${PORT}`));
 
 app.get('/api/wikimedia', async (req, res) => {
